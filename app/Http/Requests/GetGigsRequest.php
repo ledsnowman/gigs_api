@@ -20,6 +20,8 @@ class GetGigsRequest extends FormRequest
             'categories.*' => ['integer', 'exists:categories,id'], // Проверяем, что ID категорий существуют
             'date_from' => ['nullable', 'date', 'date_format:Y-m-d'],
             'date_to' => ['nullable', 'date', 'date_format:Y-m-d', 'after_or_equal:date_from'],
+            'per_page'   => ['nullable', 'integer', 'min:1', 'max:50'],
+            'page' => ['nullable', 'integer', 'min:1'],
         ];
     }
 }
