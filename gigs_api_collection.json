@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "2e44665b-610d-4022-9d35-c5d4ba3182cc",
+		"name": "Gigs API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "55246252",
+		"_collection_link": "https://blacksnowman-7b5016ee-929558.postman.co/workspace/RoadCrew's-Workspace~f1936404-0a84-43c8-873a-5676fefcbc04/collection/55246252-2e44665b-610d-4022-9d35-c5d4ba3182cc?action=share&source=collection_link&creator=55246252"
+	},
+	"item": [
+		{
+			"name": "Get basic user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server}}/api/user",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get gigs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server}}/api/gigs?categories[]=1&categories[]=4&date_from=2026-02-01&date_to=2026-05-31",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"gigs"
+					],
+					"query": [
+						{
+							"key": "categories[]",
+							"value": "1"
+						},
+						{
+							"key": "categories[]",
+							"value": "4"
+						},
+						{
+							"key": "date_from",
+							"value": "2026-02-01"
+						},
+						{
+							"key": "date_to",
+							"value": "2026-05-31"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 1. Проверяем, что сервер вернул успешный HTTP-статус (200 OK)",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// 2. Парсим JSON-ответ и сохраняем токен",
+							"if (pm.response.code === 200) {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    // Проверяем, что в ответе есть статус 'success' и сам токен",
+							"    if (responseJson.status === \"success\" && responseJson.data && responseJson.data.access_token) {",
+							"        const token = responseJson.data.access_token;",
+							"        ",
+							"        // Сохраняем токен в ГЛОБАЛЬНУЮ переменную",
+							"        pm.globals.set(\"token\", token);",
+							"        ",
+							"        console.log(\"Токен успешно сохранен в глобальную переменную 'token':\", token);",
+							"    } else {",
+							"        console.error(\"Не удалось найти 'access_token' в ответе сервера\");",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"email\": \"test@example.com\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/api/login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Loout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 1. Проверяем, что сервер вернул успешный HTTP-статус (200 OK)",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// 2. Парсим JSON-ответ и сохраняем токен",
+							"if (pm.response.code === 200) {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    // Проверяем, что в ответе есть статус 'success' и сам токен",
+							"    if (responseJson.status === \"success\" && responseJson.data && responseJson.data.access_token) {",
+							"        const token = responseJson.data.access_token;",
+							"        ",
+							"        // Сохраняем токен в ГЛОБАЛЬНУЮ переменную",
+							"        pm.globals.set(\"token\", token);",
+							"        ",
+							"        console.log(\"Токен успешно сохранен в глобальную переменную 'token':\", token);",
+							"    } else {",
+							"        console.error(\"Не удалось найти 'access_token' в ответе сервера\");",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server}}/api/logout",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
