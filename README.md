@@ -10,6 +10,7 @@
 ## Развертывание проекта
 1. `composer install`
 2. Настроить подключение к БД в `.env`
+   DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
 3. `php artisan migrate:fresh --seed` 
 (команда развернет БД, создаст тестового юзера, 11 категорий и 40 сгенерированных событий).
 
