@@ -11,6 +11,8 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GigsController extends Controller
 {
+    CONST PER_PAGE = 10;
+
     public function index(GetGigsRequest $request): AnonymousResourceCollection
     {
         // Используем eager loading (with), чтобы избежать проблемы N+1 запросов к категориям
@@ -32,11 +34,13 @@ class GigsController extends Controller
             $query->whereDate('event_date', '<=', $request->input('date_to'));
         }
 
+        $per_page = $request->filled('per_page') ? $request->input('per_page') : self::PER_PAGE;
+
         // Сортируем события: сначала ближайшие
         $query->orderBy('event_date', 'asc');
 
         // Пагинация по 10 элементов на страницу
-        $gigs = $query->paginate(10);
+        $gigs = $query->paginate($per_page);
 
         return GigResource::collection($gigs);
     }
